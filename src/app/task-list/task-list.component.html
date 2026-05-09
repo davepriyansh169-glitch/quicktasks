@@ -1,0 +1,60 @@
+<div class="task-container">
+  <div class="header-section">
+    <h1>QuickTasks</h1>
+    <span class="task-count">{{ myTasks.length }} Tasks Remaining</span>
+    <div class="header-actions">
+      <select class="sort-dropdown" (change)="onSortChange($event)">
+        <option value="id-desc">Newest First</option>
+        <option value="id-asc">Oldest First</option>
+        <option value="priority">Priority</option>
+      </select>
+      <button class="add-btn" (click)="isModalOpen = true">+ Add Task</button>
+      <a routerLink="/dashboard" class="dashboard-btn">📊 Dashboard</a>
+    </div>
+  </div>
+
+  <div class="toast" *ngIf="statusMessage">
+    {{ statusMessage }}
+  </div>
+
+  <div class="modal-overlay" *ngIf="isModalOpen">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Create Task</h2>
+        <button class="close-btn" (click)="isModalOpen = false">&times;</button>
+      </div>
+      <div class="add-task-box-modal">
+        <input type="text" #taskInput placeholder="Task name..." />
+        <input type="date" #dateInput />
+        <select #priorityInput>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <button
+          (click)="addNewTask(taskInput.value, priorityInput.value, dateInput.value); taskInput.value=''; dateInput.value=''">
+          Add Task
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div *ngFor="let t of myTasks" class="task-card"
+    [style.border-left-color]="t.priority === 'High' ? '#ff4d4d' : (t.priority === 'Medium' ? '#ffa500' : '#4caf50')">
+
+    <div class="task-info">
+      <h3 [class.completed-text]="t.completed">{{ t.title }}</h3>
+      <p>Due: {{ t.dueDate }}</p>
+      <span class="priority-tag">{{ t.priority }}</span>
+    </div>
+
+    <div class="task-actions">
+      <button class="btn-done" (click)="toggle(t)">
+        {{ t.completed ? 'Undo' : 'Complete' }}
+      </button>
+      <button class="btn-delete" (click)="delete(t.id)">Delete</button>
+    </div>
+  </div>
+</div>
