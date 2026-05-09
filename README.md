@@ -84,13 +84,6 @@ npm run build
 
 The build output will be generated in the `dist/` folder.
 
-## Screenshots
-
-Add screenshots here before or after uploading to GitHub.
-
-- Home page screenshot
-- Dashboard screenshot
-
 ## Future Improvements
 
 - Add task editing support
